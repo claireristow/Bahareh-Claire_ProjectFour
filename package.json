@@ -1,0 +1,33 @@
+{
+  "name": "projectfour",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bahareh1231/Bahareh-Claire_ProjectFour.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bahareh1231/Bahareh-Claire_ProjectFour/issues"
+  },
+  "homepage": "https://github.com/Bahareh1231/Bahareh-Claire_ProjectFour#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
+    "browser-sync": "^2.24.6",
+    "browserify": "^16.2.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-sass": "^4.0.1",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {}
+}
