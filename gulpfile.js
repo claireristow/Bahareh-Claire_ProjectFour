@@ -48,4 +48,4 @@ gulp.task('watch', () => {
     gulp.watch('*.html', reload)
 })
 
-gulp.task('default', ['bs', 'styles', 'js', 'watch'])
+gulp.task('default', ['bs', 'styles', 'js', 'watch']);

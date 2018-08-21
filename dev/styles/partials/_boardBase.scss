@@ -1,0 +1,13 @@
+.boggleBoard {
+    width: 50vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    height: 50vh;
+    .box {
+
+        border: 1px solid black;
+
+    }
+    
+}
