@@ -5,8 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="public/styles/styles.css">
 </head>
 <body>
+    <h1>hey</h1>
+    <p>thank you </p>
     
 </body>
+<script>
+
+    // const app = {};
+
+    // url = 'https://od-api.oxforddictionaries.com/api/v1/inflections/en/dog';
+    // appid = '281e028f';
+    // appkey = '5a08143129e95ff0fb2f3c1a0b293351';
+
+    // getWord = (function(){
+    //     $.ajax({
+    //         url: url,
+    //         method: 'GET',
+    //         dataType: 'application/json;charset=utf-8',
+    //         // id: 'hello',
+    //         source_lang: 'en',
+    //         word_id: 'dog',
+    //         headers: {
+    //             "app_id": appid,
+    //             "app_key": appkey
+    //         }
+
+    //     }).then(function(res){
+    //         console.log(res);
+            
+    //     });
+    // });
+
+    url = 'https://www.dictionaryapi.com/api/';
+    
+    key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
+
+    getWord = (function(){
+        $.ajax({
+            url: url,
+            method: 'GET',
+            format: 'xml',
+            keyword: 'dog',
+            key: key
+            
+            
+
+        }).then(function(res){
+            console.log(res);
+            
+        });
+    });
+
+
+
+</script>
 </html>
+
+
+
+
+
+
+
+
+
