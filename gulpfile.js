@@ -44,7 +44,7 @@ gulp.task('bs', () => {
 
 gulp.task('watch', () => {
     gulp.watch('./dev/styles/**/*.scss', ['styles']);
-    gulp.watch('./dev/scripts/**/*/script.js', ['js'])
+    gulp.watch('./dev/scripts/**/*.js', ['js'])
     gulp.watch('*.html', reload)
 })
 
