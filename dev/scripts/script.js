@@ -9,13 +9,17 @@
 
 const app = {};
 
-const chars = 'abcdefghijklmnopqrstuvwxyz';
+const chars = 'aabcdefghijklmnopqrstuvwxyz';
 
 //randomly generate letters on the board
 app.getBoard = function(){
     // generate random letters
     const ranNum = Math.floor(Math.random() * 26 ) +11;
     const ranLet = Math.toString(ranNum);
+    console.log(ranNum);
+    console.log(ranLet);
+    
+    
     
     
     // append them to the board
@@ -29,21 +33,22 @@ app.getBoard = function(){
 
 
 
-app.userInput = $('p').text();
 
-app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
+// app.userInput = $('p').text();
 
-app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
+// app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 
-function getWord() {
-    return $.ajax({
-        url: `${app.url}${app.userInput}`,
-        method: 'GET',
-        data: {
-            key: app.key
-        }
-    })
-}
+// app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
+
+// function getWord() {
+//     return $.ajax({
+//         url: `${app.url}${app.userInput}`,
+//         method: 'GET',
+//         data: {
+//             key: app.key
+//         }
+//     })
+// }
 
 
 app.init = function () {
