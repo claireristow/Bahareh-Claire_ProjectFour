@@ -1,3 +1,5 @@
+// default box styles
+
 .boggleBoard {
     width: 50vh;
     display: grid;
@@ -6,19 +8,28 @@
     height: 50vh;
     .box {
         border: 1px solid black;
-<<<<<<< HEAD
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        p {
-            font-size: 2rem;
-        }
-
-=======
-        p {
+        position: relative;
+        a {
             text-align: center;
             font-size: 30px;
+            text-decoration: none;     
+            color: black;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
         }
->>>>>>> 0eb746788719458be24b98116a8a9d8a2eb308c0
     }
+}
+
+// selected box styles 
+
+.selected {
+    font-weight: 900;
+    color: red;
 }
