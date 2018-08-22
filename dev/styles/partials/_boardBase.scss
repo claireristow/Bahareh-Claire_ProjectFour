@@ -5,8 +5,8 @@
     grid-template-rows: repeat(4, 1fr);
     height: 50vh;
     .box {
-
         border: 1px solid black;
+<<<<<<< HEAD
         display: flex;
         justify-content: center;
         align-items: center;
@@ -14,6 +14,11 @@
             font-size: 2rem;
         }
 
+=======
+        p {
+            text-align: center;
+            font-size: 30px;
+        }
+>>>>>>> 0eb746788719458be24b98116a8a9d8a2eb308c0
     }
-    
 }
