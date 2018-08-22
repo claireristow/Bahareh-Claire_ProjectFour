@@ -14,8 +14,10 @@ const chars = 'abcdefghijklmnopqrstuvwxyz';
 //randomly generate letters on the board
 app.getBoard = function(){
     // generate random letters
-    const ranNum = Math.floor(Math.random() * 26 ) +11;
-    const ranLet = Math.toString(ranNum);
+    const ranNum = Math.floor(Math.random() * 26);
+    console.log(ranNum);
+    const ranLet = chars[ranNum];
+    console.log(ranLet);
     
     
     // append them to the board
@@ -49,7 +51,6 @@ function getWord() {
 app.init = function () {
     // app.getWord();
     app.getBoard();
-    console.log('hi')
 }
 
 $(function () {
