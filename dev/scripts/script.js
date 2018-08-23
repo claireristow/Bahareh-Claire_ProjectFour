@@ -31,7 +31,11 @@ app.events = function() {
     $('.box').on('click touchstart', '.letter' ,function(e) {
         e.preventDefault(); // prevent default
         $(this).addClass('selected');
-        console.log('hi');
+        let letter = $(this).text()
+        $('.answer').append(letter);
+        let answer = $('.answer').text();
+        console.log(answer);
+
         
 
     });
@@ -40,8 +44,10 @@ app.events = function() {
     // CLEAR THE USER SELECTIONS
     // clear the p tag that holds the user's letter choices
     
-        $('.clear').on('click touchstart', function() {
-    
+    $('.clear').on('click touchstart', function(e) {
+            e.preventDefault();
+            $('.letter').removeClass('selected');
+            $('.answer').empty();
         });
     
     
