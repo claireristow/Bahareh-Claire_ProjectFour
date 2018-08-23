@@ -1,6 +1,7 @@
 const app = {};
 const chars = 'abcdefghijklmnopqrstuvwxyz';
 const score = 0;
+let answer = '';
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
@@ -31,18 +32,20 @@ app.events = function() {
     $('.box').on('click touchstart', '.letter' ,function(e) {
         e.preventDefault(); // prevent default
         $(this).addClass('selected');
-        console.log('hi');
-        
-
+        let activeLetter = $(this).find('p').text();
+        answer += activeLetter;
+        $('.answer').html(`<p>${answer}</p>`);
     });
 
-    
+
     // CLEAR THE USER SELECTIONS
     // clear the p tag that holds the user's letter choices
     
-        $('.clear').on('click touchstart', function() {
-    
-        });
+    $('.clear').on('click touchstart', function(e) {
+        e.preventDefault(); //prevent default
+        $('.answer').empty();
+        $('.letter').removeClass('selected');
+    });
     
     
     // COMPARING TO THE API
@@ -52,21 +55,21 @@ app.events = function() {
     // if there is a response, then score + 1 and append word to displayed accepted words list 
     // if null, then score doesn't change and return alert that says "not a word"
    
-        $('form').on('submit', function(e) {
-            e.preventDefualt();
-            // get the api information
-            app.getWord = function(query) {
-                return $.ajax({
-                    url: `${app.url}${app.userInput}`,
-                    method: 'GET',
-                    data: {
-                        key: app.key,
-                        word: query
-                    }
-                })
-            }
-        });
-    };
+    $('form').on('submit', function(e) {
+        e.preventDefualt();
+        // get the api information
+        app.getWord = function(query) {
+            return $.ajax({
+                url: `${app.url}${app.userInput}`,
+                method: 'GET',
+                data: {
+                    key: app.key,
+                    word: query
+                }
+            })
+        }
+    });
+};
 
 
 
