@@ -2,6 +2,7 @@ const app = {};
 const chars = 'abcdefghijklmnopqrstuvwxyz';
 const score = 0;
 let answer = '';
+let answerList = [];
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
@@ -17,16 +18,13 @@ app.getBoard = function(){
         };
         $('.start').addClass('hide');
         // Add timer *******
-    })
-};
+    }) // end of start event function
+}; //end of getBoard
 
 app.events = function() {
 
     // DISPLAYING THE ANSWER
-    // make event function on 'click touchstart'
-    // when the user clicks a letter, add a "selected" class to the box
-    // make an empty string variable and then append each letter to the end of the string as they are touched/clicked
-    // display that string on the page
+    
 
     $('.box').on('click touchstart', '.letter' ,function(e) {
         e.preventDefault(); // prevent default
@@ -34,20 +32,20 @@ app.events = function() {
         let activeLetter = $(this).find('p').text();
         answer += activeLetter;
         $('.answer').html(`<p>${answer}</p>`);
-    });
+    }); // end of making the word
+    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
     // once a letter is selected, it cannot be clicked again
 
 
     // CLEAR THE USER SELECTIONS
-    // clear the p tag that holds the user's letter choices
     
     $('.clear').on('click touchstart', function(e) {
         e.preventDefault(); //prevent default
         $('.answer').empty();
         answer = '';
         $('.letter').removeClass('selected');
-    });
+    }); // end of clear
     
     
     // COMPARING TO THE API
@@ -56,22 +54,54 @@ app.events = function() {
     // run our word(query) into the api url
     // if there is a response, then score + 1 and append word to displayed accepted words list 
     // if null, then score doesn't change and return alert that says "not a word"
+
    
     $('form').on('submit', function(e) {
-        e.preventDefualt();
-        // get the api information
-        app.getWord = function(query) {
-            return $.ajax({
-                url: `${app.url}${app.userInput}`,
+        e.preventDefault();
+        
+        const submitAnswer = $('.answer').text();
+
+        const getAPI = function(query) {
+            $.ajax({
+                url: 'https://proxy.hackeryou.com',
                 method: 'GET',
+                dataResponse: 'json',
+                paramsSerializer: function (params) {
+                    return Qs.stringify(params, { arrayFormat: 'brackets' })
+                },
                 data: {
-                    key: app.key,
-                    word: query
-                }
-            })
-        }
-    });
-};
+                    reqUrl: app.url,
+                    params: {
+                        'key': app.key,
+                        'word': query
+                    },
+                    xmlToJSON: true,
+                    useCache: false
+                } // end of ajax
+            }).then(resp => {
+                answerList.push(resp.entry_list.entry[0].ew);
+                
+                $('.answer').empty();
+                answer = "";
+                $('.letter').removeClass('selected');
+                console.log(answerList);
+                
+                
+                // app.displayAnswers(resp.ajax)
+            }); // end of this
+            } // end of getAPI function
+
+        console.log(getAPI(submitAnswer));
+
+
+        
+        
+    });  // end of form submit
+}; // end of event function
+
+// app.displayAnswers = function(answers) {
+//     $('.displayAnswers')
+// }
 
 
 
@@ -80,6 +110,7 @@ app.events = function() {
 app.init = function () {
     app.getBoard();
     app.events();
+    // app.displayAnswers();
 }
 
 // run initialize function through the doc ready function (on page load)
