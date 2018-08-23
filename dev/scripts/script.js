@@ -1,5 +1,5 @@
 const app = {};
-const chars = 'abcdefghijklmnopqrstuvwxyz';
+const chars = 'aaaaaaaaaaaaaddddddddddddd';
 const score = 0;
 let answer = '';
 let answerList = [];
@@ -79,16 +79,41 @@ app.events = function() {
                     useCache: false
                 } // end of ajax
             }).then(resp => {
-                answerList.push(resp.entry_list.entry[0].ew);
+                console.log(resp);
+                if (resp.entry_list.entry.fl != undefined) {
+                    console.log('0');
+                    
+                    $('.submitButton').addClass('wrong');
+
+                } else if (resp.entry_list.suggestion[0] != undefined) {
+                    console.log(3)
+                    $('.submitButton').addClass('wrong');
+                } 
+                else if (resp.entry_list.entry[0] != undefined) {
+                    console.log('1');
+                    
+                    answerList.push(resp.entry_list.entry[0].ew);
+
+                } else if (resp.entry_list.entry.ew != undefined) {
+                    console.log('2');
+                    
+                    answerList.push(resp.entry_list.entry.ew);
+
+                } else {
+                    console.log('else');
+                    
+                }
                 
                 $('.answer').empty();
                 answer = "";
                 $('.letter').removeClass('selected');
                 console.log(answerList);
+
                 
                 
                 // app.displayAnswers(resp.ajax)
             }); // end of this
+
             } // end of getAPI function
 
         console.log(getAPI(submitAnswer));
