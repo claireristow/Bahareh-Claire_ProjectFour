@@ -25,6 +25,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-notify": "^3.2.0",
     "gulp-sass": "^4.0.1",
+    "jquery-countdown": "^2.2.0",
     "qs": "^6.5.2",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"

@@ -1,6 +1,6 @@
 const app = {};
-const chars = 'aaaaaaaaaaaaaddddddddddddd';
-const score = 0;
+const chars = 'aaaaabcdeeeeeefghiiiiijklmmnoooooprssstttuuuwxyz';
+let score = 0;
 let answer = '';
 let answerList = [];
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
@@ -12,12 +12,16 @@ app.getBoard = function(){
         // write a for loop to iterate over each box on the board
         for (let i = 1; i <= 16; i++) {
             // generate random letters
-            const ranLet = chars[Math.floor(Math.random() * 25)];       
+            const ranLet = chars[Math.floor(Math.random() * 48)];       
             // append them to the board
             $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)
         };
         $('.start').addClass('hide');
-        // Add timer *******
+
+        $('#scoreBoard').countdown('00:01:30', function (event) {
+            $(this).html(event.strftime('-%M:-%S'));
+        });
+
     }) // end of start event function
 }; //end of getBoard
 
@@ -33,9 +37,8 @@ app.events = function() {
         answer += activeLetter;
         $('.answer').html(`<p>${answer}</p>`);
     }); // end of making the word
-    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
-    // once a letter is selected, it cannot be clicked again
+    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
 
     // CLEAR THE USER SELECTIONS
@@ -58,6 +61,7 @@ app.events = function() {
    
     $('form').on('submit', function(e) {
         e.preventDefault();
+        $('.displayedAnswers').empty();
         
         const submitAnswer = $('.answer').text();
 
@@ -80,38 +84,47 @@ app.events = function() {
                 } // end of ajax
             }).then(resp => {
                 console.log(resp);
-                if (resp.entry_list.entry.fl != undefined) {
-                    console.log('0');
-                    
-                    $('.submitButton').addClass('wrong');
-
-                } else if (resp.entry_list.suggestion[0] != undefined) {
-                    console.log(3)
+                
+                if (resp.entry_list.suggestion) {
                     $('.submitButton').addClass('wrong');
                 } 
-                else if (resp.entry_list.entry[0] != undefined) {
-                    console.log('1');
-                    
-                    answerList.push(resp.entry_list.entry[0].ew);
 
-                } else if (resp.entry_list.entry.ew != undefined) {
-                    console.log('2');
-                    
-                    answerList.push(resp.entry_list.entry.ew);
-
+                else if (resp.entry_list.entry) {   
+                    if (resp.entry_list.entry[0]){
+                        answerList.push(resp.entry_list.entry[0].ew);
+                        score += 1;
+                        
+                        if (resp.entry_list.entry[0].fl === 'abbreviation' ) {
+                            $('.submitButton').addClass('wrong');
+                        }
+                        
+                    } else { // aka if it's an object
+                        if (resp.entry_list.entry.fl === 'abbreviation'){
+                            $('.submitButton').addClass('wrong');
+                            
+                        } else {
+                        // is object
+                        answerList.push(resp.entry_list.entry.ew);
+                        score += 1;
+                        }
+                    }
                 } else {
-                    console.log('else');
-                    
+                    console.log('wrong');
+                    $('.submitButton').addClass('wrong');
                 }
                 
+                    
                 $('.answer').empty();
                 answer = "";
                 $('.letter').removeClass('selected');
                 console.log(answerList);
 
+
+
                 
+                app.displayAnswers();
+                app.changeScore();
                 
-                // app.displayAnswers(resp.ajax)
             }); // end of this
 
             } // end of getAPI function
@@ -124,9 +137,16 @@ app.events = function() {
     });  // end of form submit
 }; // end of event function
 
-// app.displayAnswers = function(answers) {
-//     $('.displayAnswers')
-// }
+app.displayAnswers = function() {
+    answerList.forEach(function(word){
+        // $('.displayedAnswers').empty();
+        $('.displayedAnswers').append(`<li>${word}</li>`)
+    })
+};
+
+app.changeScore = function() {
+    $('.score').html(`${score}`)
+}
 
 
 
@@ -135,7 +155,6 @@ app.events = function() {
 app.init = function () {
     app.getBoard();
     app.events();
-    // app.displayAnswers();
 }
 
 // run initialize function through the doc ready function (on page load)
