@@ -71,6 +71,28 @@ app.events = function() {
             })
         }
     });
+
+    $.ajax({
+        url: 'https://proxy.hackeryou.com',
+        method: 'GET',
+        dataResponse: 'json',
+        paramsSerializer: function (params) {
+            return Qs.stringify(params, { arrayFormat: 'brackets' })
+        },
+        data: {
+            reqUrl: app.url,
+            params: {
+                'key': app.key,
+                'word': 'dog'
+            },
+            xmlToJSON: true,
+            useCache: false
+        }
+    }).then(resp => {
+        console.log(resp)
+    });
+
+
 };
 
 
