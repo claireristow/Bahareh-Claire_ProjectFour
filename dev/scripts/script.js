@@ -24,7 +24,6 @@ app.events = function() {
 
     // DISPLAYING THE ANSWER
     // make event function on 'click touchstart'
-    
     // when the user clicks a letter, add a "selected" class to the box
     // make an empty string variable and then append each letter to the end of the string as they are touched/clicked
     // display that string on the page
@@ -37,6 +36,8 @@ app.events = function() {
         $('.answer').html(`<p>${answer}</p>`);
     });
 
+    // once a letter is selected, it cannot be clicked again
+
 
     // CLEAR THE USER SELECTIONS
     // clear the p tag that holds the user's letter choices
@@ -44,6 +45,7 @@ app.events = function() {
     $('.clear').on('click touchstart', function(e) {
         e.preventDefault(); //prevent default
         $('.answer').empty();
+        answer = '';
         $('.letter').removeClass('selected');
     });
     
