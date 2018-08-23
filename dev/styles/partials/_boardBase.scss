@@ -31,5 +31,6 @@
 
 .selected {
     font-weight: 900;
-    color: red;
+    pointer-events: none;
+    cursor: default;
 }
