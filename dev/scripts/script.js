@@ -1,8 +1,9 @@
 const app = {};
-const chars = 'aaaaaaaaaaaaaddddddddddddd';
-const score = 0;
+const chars = 'aaaaabcdeeeeeefghiiiiijklmmnoooooprssstttuuuwxyz';
+let score = 0;
 let answer = '';
 let answerList = [];
+
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
@@ -12,12 +13,16 @@ app.getBoard = function(){
         // write a for loop to iterate over each box on the board
         for (let i = 1; i <= 16; i++) {
             // generate random letters
-            const ranLet = chars[Math.floor(Math.random() * 25)];       
+            const ranLet = chars[Math.floor(Math.random() * 48)];       
             // append them to the board
             $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)
         };
         $('.start').addClass('hide');
-        // Add timer *******
+
+        // $('#scoreBoard').countdown('00:01:30', function (event) {
+        //     $(this).html(event.strftime('-%M:-%S'));
+        // });
+
     }) // end of start event function
 }; //end of getBoard
 
@@ -33,9 +38,8 @@ app.events = function() {
         answer += activeLetter;
         $('.answer').html(`<p>${answer}</p>`);
     }); // end of making the word
-    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
-    // once a letter is selected, it cannot be clicked again
+    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
 
     // CLEAR THE USER SELECTIONS
@@ -49,15 +53,11 @@ app.events = function() {
     
     
     // COMPARING TO THE API
-    // comapre word to the list of words they have already created. if it's on there, throw an error( "you've already guessed that word"). If not then compare to the api
-    // connect to the api
-    // run our word(query) into the api url
-    // if there is a response, then score + 1 and append word to displayed accepted words list 
-    // if null, then score doesn't change and return alert that says "not a word"
 
    
     $('form').on('submit', function(e) {
         e.preventDefault();
+        $('.displayedAnswers').empty();
         
         const submitAnswer = $('.answer').text();
 
@@ -80,38 +80,73 @@ app.events = function() {
                 } // end of ajax
             }).then(resp => {
                 console.log(resp);
-                if (resp.entry_list.entry.fl != undefined) {
-                    console.log('0');
-                    
-                    $('.submitButton').addClass('wrong');
-
-                } else if (resp.entry_list.suggestion[0] != undefined) {
-                    console.log(3)
-                    $('.submitButton').addClass('wrong');
-                } 
-                else if (resp.entry_list.entry[0] != undefined) {
-                    console.log('1');
-                    
-                    answerList.push(resp.entry_list.entry[0].ew);
-
-                } else if (resp.entry_list.entry.ew != undefined) {
-                    console.log('2');
-                    
-                    answerList.push(resp.entry_list.entry.ew);
-
-                } else {
-                    console.log('else');
-                    
-                }
                 
+                if (resp.entry_list.suggestion) {
+                    $('.submitButton').addClass('wrong');
+                    setTimeout(() => {
+                        $('.submitButton').removeClass('wrong');
+                    }, 1000);
+                } 
+
+                else if (resp.entry_list.entry) {   
+                    if (resp.entry_list.entry[0]){
+                        app.dontPost(resp.entry_list.entry[0].ew);
+                        answerList.push(resp.entry_list.entry[0].ew);
+                        app.findWhiteSpace(resp.entry_list.entry[0].ew);
+                        score += 1;
+                        console.log(resp.entry_list.entry[0].ew);
+                        
+                        
+                        
+                        if (resp.entry_list.entry[0].fl === 'abbreviation' ) {
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                            
+                            
+                        }
+                        
+                    } else { // aka if it's an object
+                        if (resp.entry_list.entry.fl === 'abbreviation'){
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                            
+                            
+                            } else {
+                        // is object
+                            app.dontPost(resp.entry_list.entry.ew);
+                            answerList.push(resp.entry_list.entry.ew);
+                            app.findWhiteSpace(resp.entry_list.entry.ew);
+                            score += 1;
+                            console.log(resp.entry_list.entry.ew);
+                            
+                                
+                            }
+                    }
+                } else {
+                    $('.submitButton').addClass('wrong');
+                    setTimeout(() => {
+                        $('.submitButton').removeClass('wrong');
+                    }, 1000);
+                    
+                    
+                };
+                
+                    
                 $('.answer').empty();
                 answer = "";
                 $('.letter').removeClass('selected');
                 console.log(answerList);
 
+
+
                 
+                app.displayAnswers();
+                app.changeScore();
                 
-                // app.displayAnswers(resp.ajax)
             }); // end of this
 
             } // end of getAPI function
@@ -124,9 +159,45 @@ app.events = function() {
     });  // end of form submit
 }; // end of event function
 
-// app.displayAnswers = function(answers) {
-//     $('.displayAnswers')
-// }
+app.displayAnswers = function() {
+    answerList.forEach(function(word){
+        // $('.displayedAnswers').empty();
+        $('.displayedAnswers').append(`<li>${word}</li>`)
+    })
+};
+
+app.changeScore = function() {
+    $('.score').html(`${score}`)
+}
+
+app.dontPost = function(guess){
+    var i = answerList.length;
+    while(i--) {
+        if (guess === answerList[i]) {
+            score -= 1;
+            $('.submitButton').addClass('wrong');
+            setTimeout(() => {
+                $('.submitButton').removeClass('wrong');
+            }, 1000);
+            answerList.pop();
+
+        }
+    }
+}
+
+app.findWhiteSpace = function() {
+    answerList.forEach(function(word){
+        var n = word.includes(" ");
+        if (word = n) {
+            score -= 1;
+            $('.submitButton').addClass('wrong');
+            setTimeout(() => {
+                $('.submitButton').removeClass('wrong');
+            }, 1000);
+            answerList.pop();
+        }
+    })
+}
 
 
 
@@ -135,7 +206,6 @@ app.events = function() {
 app.init = function () {
     app.getBoard();
     app.events();
-    // app.displayAnswers();
 }
 
 // run initialize function through the doc ready function (on page load)
