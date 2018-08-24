@@ -3,6 +3,7 @@ const chars = 'aaaaabcdeeeeeefghiiiiijklmmnoooooprssstttuuuwxyz';
 let score = 0;
 let answer = '';
 let answerList = [];
+
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
@@ -18,9 +19,9 @@ app.getBoard = function(){
         };
         $('.start').addClass('hide');
 
-        $('#scoreBoard').countdown('00:01:30', function (event) {
-            $(this).html(event.strftime('-%M:-%S'));
-        });
+        // $('#scoreBoard').countdown('00:01:30', function (event) {
+        //     $(this).html(event.strftime('-%M:-%S'));
+        // });
 
     }) // end of start event function
 }; //end of getBoard
@@ -52,11 +53,6 @@ app.events = function() {
     
     
     // COMPARING TO THE API
-    // comapre word to the list of words they have already created. if it's on there, throw an error( "you've already guessed that word"). If not then compare to the api
-    // connect to the api
-    // run our word(query) into the api url
-    // if there is a response, then score + 1 and append word to displayed accepted words list 
-    // if null, then score doesn't change and return alert that says "not a word"
 
    
     $('form').on('submit', function(e) {
@@ -87,31 +83,57 @@ app.events = function() {
                 
                 if (resp.entry_list.suggestion) {
                     $('.submitButton').addClass('wrong');
+                    setTimeout(() => {
+                        $('.submitButton').removeClass('wrong');
+                    }, 1000);
                 } 
 
                 else if (resp.entry_list.entry) {   
                     if (resp.entry_list.entry[0]){
+                        app.dontPost(resp.entry_list.entry[0].ew);
                         answerList.push(resp.entry_list.entry[0].ew);
+                        app.findWhiteSpace(resp.entry_list.entry[0].ew);
                         score += 1;
+                        console.log(resp.entry_list.entry[0].ew);
+                        
+                        
                         
                         if (resp.entry_list.entry[0].fl === 'abbreviation' ) {
                             $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                            
+                            
                         }
                         
                     } else { // aka if it's an object
                         if (resp.entry_list.entry.fl === 'abbreviation'){
                             $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
                             
-                        } else {
+                            
+                            } else {
                         // is object
-                        answerList.push(resp.entry_list.entry.ew);
-                        score += 1;
-                        }
+                            app.dontPost(resp.entry_list.entry.ew);
+                            answerList.push(resp.entry_list.entry.ew);
+                            app.findWhiteSpace(resp.entry_list.entry.ew);
+                            score += 1;
+                            console.log(resp.entry_list.entry.ew);
+                            
+                                
+                            }
                     }
                 } else {
-                    console.log('wrong');
                     $('.submitButton').addClass('wrong');
-                }
+                    setTimeout(() => {
+                        $('.submitButton').removeClass('wrong');
+                    }, 1000);
+                    
+                    
+                };
                 
                     
                 $('.answer').empty();
@@ -146,6 +168,35 @@ app.displayAnswers = function() {
 
 app.changeScore = function() {
     $('.score').html(`${score}`)
+}
+
+app.dontPost = function(guess){
+    var i = answerList.length;
+    while(i--) {
+        if (guess === answerList[i]) {
+            score -= 1;
+            $('.submitButton').addClass('wrong');
+            setTimeout(() => {
+                $('.submitButton').removeClass('wrong');
+            }, 1000);
+            answerList.pop();
+
+        }
+    }
+}
+
+app.findWhiteSpace = function() {
+    answerList.forEach(function(word){
+        var n = word.includes(" ");
+        if (word = n) {
+            score -= 1;
+            $('.submitButton').addClass('wrong');
+            setTimeout(() => {
+                $('.submitButton').removeClass('wrong');
+            }, 1000);
+            answerList.pop();
+        }
+    })
 }
 
 
