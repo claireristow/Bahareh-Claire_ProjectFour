@@ -17,7 +17,8 @@ app.getBoard = function(){
             // append them to the board
             $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)
         };
-        $('.start').addClass('hide');
+        // $('.start').addClass('hide');
+        app.timer(90);
 
         // $('#scoreBoard').countdown('00:01:30', function (event) {
         //     $(this).html(event.strftime('-%M:-%S'));
@@ -94,6 +95,7 @@ app.events = function() {
 
                 else if (word) {   
                     if (word[0]){
+                        app.wrongAnswer(word[0].ew);
                         answerList.add(word[0].ew);
                         app.findWhiteSpace(word[0].ew);
                         console.log(word[0].ew);
@@ -119,6 +121,7 @@ app.events = function() {
                             
                             } else {
                         // is object
+                            app.wrongAnswer(word.ew);
                             answerList.add(word.ew);
                             app.findWhiteSpace(word.ew);
                             console.log(word.ew);
@@ -163,12 +166,46 @@ app.displayAnswers = function() {
     answerList.forEach(function(word){
         // $('.displayedAnswers').empty();
         $('.displayedAnswers').append(`<li>${word}</li>`)
-    })
+    });
+};
+
+app.wrongAnswer = function(word) {
+    if (answerList.has(word)) {
+        $('.submitButton').addClass('wrong');
+        setTimeout(() => {
+            $('.submitButton').removeClass('wrong');
+        }, 1000);
+    };
 };
 
 app.changeScore = function() {
     let score = answerList.size;
     $('.score').html(`${score}`)
+};
+
+let countdown;
+const timerDisplay = document.querySelector('.timeLeft');
+app.timer = function(seconds) {
+    const notNow = Date.now();
+    const then = notNow + seconds * 1000;
+    displayTimeLeft(seconds);
+
+    countdown = setInterval(() => {
+        const secondsLeft = (then - Date.now()) / 1000;
+        if(secondsLeft <= 0) {
+            clearInterval(countdown);
+            return;
+        }
+        displayTimeLeft(secondsLeft);
+    }, 1000);
+}
+
+function displayTimeLeft(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainderSeconds = Math.floor(seconds % 60);
+    const display = `${minutes}:${remainderSeconds}`;
+    timerDisplay.textContent = display;
+    console.log({minutes, remainderSeconds});
 }
 
 // $('.submitButton').addClass('wrong');
@@ -187,9 +224,9 @@ app.findWhiteSpace = function() {
                 $('.submitButton').removeClass('wrong');
             }, 1000);
             answerList.pop();
-        }
-    })
-}
+        };
+    });
+};
 
 
 
@@ -198,7 +235,7 @@ app.findWhiteSpace = function() {
 app.init = function () {
     app.getBoard();
     app.events();
-}
+};
 
 // run initialize function through the doc ready function (on page load)
 $(function () {
