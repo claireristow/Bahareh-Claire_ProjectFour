@@ -1,0 +1,25 @@
+.firstPage {
+    height: 100vh;
+    header {
+        display: flex;
+        justify-content: center;
+        height: 20vh;
+        text-align: center;
+    }
+    main {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+
+    }
+    footer {
+        text-align: center;
+        height: 10vh;
+    }
+    
+}
+
+
