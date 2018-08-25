@@ -92,69 +92,141 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 console.log(resp);
 
                 const word = resp.entry_list.entry;
-                
-                if (resp.entry_list.suggestion) { // if suggestion
+
+                if (resp.entry_list.suggestion) {
                     $('.submitButton').addClass('wrong');
                     setTimeout(() => {
                         $('.submitButton').removeClass('wrong');
                     }, 1000);
                     // console.log('suggestion');
-                    
-                } // end of suggestion
 
-                else if (word) {   
-                    if (word[0]) { //array
+                } // end of suggestion
+                else if (word) { // start of if (word)
+                    if (word[0]) { //is array
+                        if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner") { // array word types
                         app.wrongAnswer(word[0].ew);
                         answerList.add(word[0].ew);
                         app.findWhiteSpace(word[0].ew);
-                    
-                        if (word[0].fl === 'abbreviation') { // abbreviation array
-                            answerList.delete(word[0].ew);
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
-                        
-                        } // end of array abbreviation
-                        else if (word[0].ew === word[0].ew.toUpperCase()){
-                            answerList.delete(word[0].ew);
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
-                        }
-                        
-                    }  // end of array
-                    else { // aka if it's an object
-                        if (word.fl === 'abbreviation'){ //object abbreviation
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
-  
-                        }  // end of object abbreviation
-                        else if (word.ew === word.ew.toUpperCase()) { //object uppercase noun
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
-                        } //end of object uppercase noun
-                        else { //object no array
-                            app.wrongAnswer(word.ew);
-                            answerList.add(word.ew);
-                            app.findWhiteSpace(word.ew);
-                            console.log(word.ew);
 
-                        }// end of object no array
+                            if (word[0].ew === word[0].ew.toUpperCase() || word[0].ew === (word[0].ew).charAt(0).toUpperCase() + (word[0].ew).slice(1)) { // word is uppercase abbrev OR capitalized
+                                answerList.delete(word[0].ew);
+                                $('.submitButton').addClass('wrong');
+                                setTimeout(() => {
+                                    $('.submitButton').removeClass('wrong');
+                                }, 1000);
+                            } //end of word is uppercase abbrev OR capitalized
 
-                    } // end of object
-                } else {
+                        } //end of array word types
+                        else { // unaccepted word type for arrays
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                        } //end of unaccepted word type for arrays
+
+                    } // end of is array
+                    else { //is object
+                        if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner") { // object word types 
+                        app.wrongAnswer(word.ew);
+                        answerList.add(word.ew);
+                        app.findWhiteSpace(word.ew);
+
+                            if (word.ew === word.ew.toUpperCase() || word.ew === (word.ew).charAt(0).toUpperCase() + (word.ew).slice(1)) { // word is uppercase abbrev OR capitalized
+                                answerList.delete(word.ew);
+                                $('.submitButton').addClass('wrong');
+                                setTimeout(() => {
+                                    $('.submitButton').removeClass('wrong');
+                                }, 1000);
+                            } //end of word is uppercase abbrev OR capitalized
+                            else if (word.et === "by shortening & alteration") { //shortform word
+                                answerList.delete(word.ew);
+                                $('.submitButton').addClass('wrong');
+                                setTimeout(() => {
+                                    $('.submitButton').removeClass('wrong');
+                                }, 1000);
+                            } // end of shortform word like "helo"
+
+                        } //end of object word types
+                        else { // unaccepted word type for objects
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                        } //end of unaccepted word type for objects
+
+                    } //end of is object
+
+                } // end of if (word)
+                else { //not a word
                     $('.submitButton').addClass('wrong');
                     setTimeout(() => {
                         $('.submitButton').removeClass('wrong');
                     }, 1000);
-                    
+
                 }; // end of 'not a word'
+                
+                // if (resp.entry_list.suggestion) { // if suggestion
+                //     $('.submitButton').addClass('wrong');
+                //     setTimeout(() => {
+                //         $('.submitButton').removeClass('wrong');
+                //     }, 1000);
+                //     // console.log('suggestion');
+                    
+                // } // end of suggestion
+
+                // else if (word) {   
+                //     if (word[0]) { //array
+                //         app.wrongAnswer(word[0].ew);
+                //         answerList.add(word[0].ew);
+                //         app.findWhiteSpace(word[0].ew);
+                    
+                //         if (word[0].fl === 'abbreviation') { // abbreviation array
+                //             answerList.delete(word[0].ew);
+                //             $('.submitButton').addClass('wrong');
+                //             setTimeout(() => {
+                //                 $('.submitButton').removeClass('wrong');
+                //             }, 1000);
+                        
+                //         } // end of array abbreviation
+                //         else if (word[0].ew === word[0].ew.toUpperCase()){
+                //             answerList.delete(word[0].ew);
+                //             $('.submitButton').addClass('wrong');
+                //             setTimeout(() => {
+                //                 $('.submitButton').removeClass('wrong');
+                //             }, 1000);
+                //         }
+                        
+                //     }  // end of array
+                //     else { // aka if it's an object
+                //         if (word.fl === 'abbreviation'){ //object abbreviation
+                //             $('.submitButton').addClass('wrong');
+                //             setTimeout(() => {
+                //                 $('.submitButton').removeClass('wrong');
+                //             }, 1000);
+  
+                //         }  // end of object abbreviation
+                //         else if (word.ew === word.ew.toUpperCase()) { //object uppercase noun
+                //             $('.submitButton').addClass('wrong');
+                //             setTimeout(() => {
+                //                 $('.submitButton').removeClass('wrong');
+                //             }, 1000);
+                //         } //end of object uppercase noun
+                //         else { //object no array
+                //             app.wrongAnswer(word.ew);
+                //             answerList.add(word.ew);
+                //             app.findWhiteSpace(word.ew);
+                //             console.log(word.ew);
+
+                //         }// end of object no array
+
+                //     } // end of object
+                // } else {
+                //     $('.submitButton').addClass('wrong');
+                //     setTimeout(() => {
+                //         $('.submitButton').removeClass('wrong');
+                //     }, 1000);
+                    
+                // }; // end of 'not a word'
                     
                 $('.answer').empty();
                 answer = "";
@@ -167,10 +239,12 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
             }); // end of then
 
         }; // end of getAPI function
+        console.log(getAPI(submitAnswer));
         
     });  // end of form submit
     
 }; // end of event function
+
 
 // APPEND ANSWER TO THE DISPLAYEDANSWERS DIV
 
