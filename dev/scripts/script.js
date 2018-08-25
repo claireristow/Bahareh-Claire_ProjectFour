@@ -4,6 +4,8 @@ const app = {};
 const chars = 'aaaaabbccdddeeeeeeefgghhiiiiiijklllmmnnoooooprrrrsssttttuuuvwxyz';
 let answer = '';
 const answerList = new Set();
+let countdown;
+const timerDisplay = document.querySelector('.timeLeft');
 
 app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
@@ -94,74 +96,53 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 const word = resp.entry_list.entry;
 
                 if (resp.entry_list.suggestion) {
-                    $('.submitButton').addClass('wrong');
-                    setTimeout(() => {
-                        $('.submitButton').removeClass('wrong');
-                    }, 1000);
+                    app.wrongAlert();
                     // console.log('suggestion');
 
                 } // end of suggestion
                 else if (word) { // start of if (word)
                     if (word[0]) { //is array
                         if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner") { // array word types
-                        app.wrongAnswer(word[0].ew);
+                        app.duplicateAnswer(word[0].ew);
                         answerList.add(word[0].ew);
                         app.findWhiteSpace(word[0].ew);
 
                             if (word[0].ew === word[0].ew.toUpperCase() || word[0].ew === (word[0].ew).charAt(0).toUpperCase() + (word[0].ew).slice(1)) { // word is uppercase abbrev OR capitalized
                                 answerList.delete(word[0].ew);
-                                $('.submitButton').addClass('wrong');
-                                setTimeout(() => {
-                                    $('.submitButton').removeClass('wrong');
-                                }, 1000);
+                                app.wrongAlert();
                             } //end of word is uppercase abbrev OR capitalized
 
                         } //end of array word types
                         else { // unaccepted word type for arrays
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
+                            app.wrongAlert();
                         } //end of unaccepted word type for arrays
 
                     } // end of is array
                     else { //is object
                         if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner") { // object word types 
-                        app.wrongAnswer(word.ew);
+                        app.duplicateAnswer(word.ew);
                         answerList.add(word.ew);
                         app.findWhiteSpace(word.ew);
 
                             if (word.ew === word.ew.toUpperCase() || word.ew === (word.ew).charAt(0).toUpperCase() + (word.ew).slice(1)) { // word is uppercase abbrev OR capitalized
                                 answerList.delete(word.ew);
-                                $('.submitButton').addClass('wrong');
-                                setTimeout(() => {
-                                    $('.submitButton').removeClass('wrong');
-                                }, 1000);
+                                app.WrongAlert();
                             } //end of word is uppercase abbrev OR capitalized
                             else if (word.et === "by shortening & alteration") { //shortform word
                                 answerList.delete(word.ew);
-                                $('.submitButton').addClass('wrong');
-                                setTimeout(() => {
-                                    $('.submitButton').removeClass('wrong');
-                                }, 1000);
+                                app.wrongAlert();
                             } // end of shortform word like "helo"
 
                         } //end of object word types
                         else { // unaccepted word type for objects
-                            $('.submitButton').addClass('wrong');
-                            setTimeout(() => {
-                                $('.submitButton').removeClass('wrong');
-                            }, 1000);
+                            app.wrongAlert();
                         } //end of unaccepted word type for objects
 
                     } //end of is object
 
                 } // end of if (word)
                 else { //not a word
-                    $('.submitButton').addClass('wrong');
-                    setTimeout(() => {
-                        $('.submitButton').removeClass('wrong');
-                    }, 1000);
+                    app.wrongAlert();
 
                 }; // end of 'not a word'
                 
@@ -176,7 +157,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
                 // else if (word) {   
                 //     if (word[0]) { //array
-                //         app.wrongAnswer(word[0].ew);
+                //         app.duplicateAnswer(word[0].ew);
                 //         answerList.add(word[0].ew);
                 //         app.findWhiteSpace(word[0].ew);
                     
@@ -212,7 +193,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 //             }, 1000);
                 //         } //end of object uppercase noun
                 //         else { //object no array
-                //             app.wrongAnswer(word.ew);
+                //             app.duplicateAnswer(word.ew);
                 //             answerList.add(word.ew);
                 //             app.findWhiteSpace(word.ew);
                 //             console.log(word.ew);
@@ -258,14 +239,22 @@ app.displayAnswers = function() {
 
 // IF DUPLICATE, MAKE THE SUBMIT BUTTON SHOW THAT THEY ARE WRONG
 
-app.wrongAnswer = function(word) { 
+app.duplicateAnswer = function(word) { 
     if (answerList.has(word)) {
-        $('.submitButton').addClass('wrong');
-        setTimeout(() => {
-            $('.submitButton').removeClass('wrong');
-        }, 1000);
+        app.wrongAlert();
     };
-}; // end of wrongAnswer function
+}; // end of duplicateAnswer function
+
+app.wrongAlert = function() {
+    $('.submitButton').addClass('wrong');
+    setTimeout(() => {
+        $('.submitButton').removeClass('wrong');
+    }, 1000);
+    $('.letter.selected').addClass('wrong');
+    setTimeout(() => {
+        $('.letter').removeClass('wrong');
+    }, 1000);
+}
 
 
 // SCORE WILL BE THE SAME AS THE NUMBER OF ITEMS ON THE SET
@@ -282,12 +271,8 @@ app.findWhiteSpace = function () {
     answerList.forEach(function (word) {
         let n = word.includes(" ");
         if (word = n) {
-            score -= 1;
-            $('.submitButton').addClass('wrong');
-            setTimeout(() => {
-                $('.submitButton').removeClass('wrong');
-            }, 1000);
-            answerList.pop();
+            app.wrongAlert();
+            answerList.delete(word);
         };
     }); // end of forEach loop
 }; // end of findWhiteSpace
@@ -295,17 +280,19 @@ app.findWhiteSpace = function () {
 
 // TIMER
 
-let countdown;
-const timerDisplay = document.querySelector('.timeLeft');
 app.timer = function(seconds) {
     const now = Date.now();
     const then = now + seconds * 1000;
     displayTimeLeft(seconds);
 
     countdown = setInterval(() => {
-        const secondsLeft = (then - Date.now()) / 1000;
+        let secondsLeft = (then - Date.now()) / 1000;
+        // if ( secondsLeft < 10) {
+        //     secondsLeft = "0" + secondsLeft;
+        // }
         if(secondsLeft <= 0) {
             clearInterval(countdown);
+            app.gameOver()
             return;
         }
         displayTimeLeft(secondsLeft);
@@ -320,6 +307,17 @@ function displayTimeLeft(seconds) {
     const display = `${minutes}:${remainderSeconds}`;
     timerDisplay.textContent = display;
 } // end of displaying the time
+
+// GAME OVER OVERLAY
+app.gameOver = function() {
+    $('.overlay').removeClass('hide');
+    $('.playAgain').on('click touchstart', function(e) {
+        e.preventDefault();
+        window.location.replace("/board.html");
+        $('.overlay').addClass('hide');
+    }); // end of start event function
+
+}
 
 
 

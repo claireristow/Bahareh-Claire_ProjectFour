@@ -1,0 +1,23 @@
+body {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9));
+    color: white;
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    p {
+        margin: 2rem 0;
+    }
+}
+
+.hide {
+    display: none;
+}
