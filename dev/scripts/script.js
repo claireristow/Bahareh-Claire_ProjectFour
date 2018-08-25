@@ -33,7 +33,6 @@ app.getBoard = function(){
 app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
 
-
     // DISPLAYING THE ANSWER
     
     $('.box').on('click touchstart', '.letter' ,function(e) {
@@ -104,21 +103,26 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 } // end of suggestion
 
                 else if (word) {   
-                        if (word[0]) { //array
-                            app.wrongAnswer(word[0].ew);
-                            answerList.add(word[0].ew);
-                            app.findWhiteSpace(word[0].ew);
-                            // console.log('array');
-                       
+                    if (word[0]) { //array
+                        app.wrongAnswer(word[0].ew);
+                        answerList.add(word[0].ew);
+                        app.findWhiteSpace(word[0].ew);
+                    
+                        if (word[0].fl === 'abbreviation') { // abbreviation array
+                            answerList.delete(word[0].ew);
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
                         
-                         if (word[0].fl === 'abbreviation') { // abbreviation array
-                             $('.submitButton').addClass('wrong');
-                             setTimeout(() => {
-                                 $('.submitButton').removeClass('wrong');
-                             }, 1000);
-                            //  console.log('abbrieve array');
-                            
                         } // end of array abbreviation
+                        else if (word[0].ew === word[0].ew.toUpperCase()){
+                            answerList.delete(word[0].ew);
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                        }
                         
                     }  // end of array
                     else { // aka if it's an object
@@ -127,51 +131,45 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                             setTimeout(() => {
                                 $('.submitButton').removeClass('wrong');
                             }, 1000);
-                            // console.log('abbrev object');
   
-                            }  // end of object abbreviation
-                            else { //object no array
+                        }  // end of object abbreviation
+                        else if (word.ew === word.ew.toUpperCase()) { //object uppercase noun
+                            $('.submitButton').addClass('wrong');
+                            setTimeout(() => {
+                                $('.submitButton').removeClass('wrong');
+                            }, 1000);
+                        } //end of object uppercase noun
+                        else { //object no array
                             app.wrongAnswer(word.ew);
                             answerList.add(word.ew);
                             app.findWhiteSpace(word.ew);
                             console.log(word.ew);
-                            // console.log('object');
-                            
-                            
-                                
-                            }// end of object no array
+
+                        }// end of object no array
+
                     } // end of object
                 } else {
                     $('.submitButton').addClass('wrong');
                     setTimeout(() => {
                         $('.submitButton').removeClass('wrong');
                     }, 1000);
-                    // console.log('not a word');
                     
                 }; // end of 'not a word'
-                
                     
                 $('.answer').empty();
                 answer = "";
                 $('.letter').removeClass('selected');
                 console.log(answerList);
 
-
-
-                
                 app.displayAnswers();
                 app.changeScore();
                 
-            }); // end of this
+            }); // end of then
 
-            } // end of getAPI function
-
-        console.log(getAPI(submitAnswer));
-
-        
-        
+        }; // end of getAPI function
         
     });  // end of form submit
+    
 }; // end of event function
 
 // APPEND ANSWER TO THE DISPLAYEDANSWERS DIV
@@ -200,7 +198,7 @@ app.wrongAnswer = function(word) {
 
 app.changeScore = function() {
     let score = answerList.size;
-    $('.score').html(`${score}`)
+    $('.score').html(`${score}`);
 };
 
 
@@ -247,7 +245,6 @@ function displayTimeLeft(seconds) {
     const remainderSeconds = Math.floor(seconds % 60);
     const display = `${minutes}:${remainderSeconds}`;
     timerDisplay.textContent = display;
-    console.log({minutes, remainderSeconds});
 } // end of displaying the time
 
 
