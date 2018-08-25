@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="public/styles/styles.css">
+    <title>Boggle</title>
+</head>
+<body>
+    <header>
+        <h1>Baby Boggle</h1>
+    </header>
+
+
+    <main>
+
+    <div class="overlay">
+        
+            <div class="timer"> <!-- timer-->
+                <div class="display">
+                    <h1 class="timeLeft"></h1>
+                    <p class="endTime"></p>
+                </div>
+            </div> <!-- end of timer -->
+
+        
+            <div> <!--score board-->
+                <p>score: <span class="score">0</span></p>
+            </div> <!-- end of score board-->
+            
+
+            <div class="boggleBoard">  <!-- 4x4 board-->
+                <div class="box 1"></div>
+                <div class="box 2"></div>
+                <div class="box 3"></div>
+                <div class="box 4"></div>
+                <div class="box 5"></div>
+                <div class="box 6"></div>
+                <div class="box 7"></div>
+                <div class="box 8"></div>
+                <div class="box 9"></div>
+                <div class="box 10"></div>
+                <div class="box 11"></div>
+                <div class="box 12"></div>
+                <div class="box 13"></div>
+                <div class="box 14"></div>
+                <div class="box 15"></div>
+                <div class="box 16"></div>
+            </div> <!-- end of board-->
+
+            
+            <form action="#"> <!--submit and clear buttons-->
+                <div class="answer"></div>
+                <button class="clear">Clear Selections</button>
+                <button class="submitButton" type="submit">Submit Word</button>
+            </form> <!-- end of form-->
+
+            <div> <!-- listing ansers on the page only on desktop-->
+                <ul class="displayedAnswers">
+            
+                </ul>
+            </div> <!-- end of displaydAnswers-->
+
+        </div> <!--end of overlay-->
+
+    </main>
+
+
+
+ 
+
+    <footer>
+        <p>&copy; Bahareh & Claire</p>
+    </footer>
+ 
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
+    
+    <script src="node_modules/qs/dist/qs.js"></script>
+    
+    
+    <script src="public/scripts/script.js"></script>
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
