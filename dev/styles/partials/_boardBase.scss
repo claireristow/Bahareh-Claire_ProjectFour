@@ -36,6 +36,11 @@
     background: $lightblue;
 }
 
+.unclickable {
+    pointer-events: none;
+    cursor: default;
+}
+
 .answerContainer {
     height: 3rem;
 }

@@ -43,15 +43,38 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         let activeLetter = $(this).find('p').text();
         answer += activeLetter;
         $('.answer').html(`<p>${answer}</p>`);
+        
+        // // STRETCH GOAL 
+
+        // // upon first click, make everything 'unclickable'
+        // $('.letter').addClass('unclickable');
+        
+        // // selectedBoxNum is equal to the *number* class of the box div
+        // let selectedBoxNum = parseInt(($(this).parent()).attr('class').slice(-1));
+        // const boxClass = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+
+        // // make everything within 'selected' +- 1345+, clickable
+        // boxClass.forEach(function(box) {
+        //     if (box === selectedBoxNum + 1 || box === selectedBoxNum - 1) {
+        //         $(`.${box} .letter`).removeClass('unclickable');
+        //     } else if (box === selectedBoxNum + 3 || box === selectedBoxNum - 3) {
+        //         $(`.${box} .letter`).removeClass('unclickable')
+        //     } else if (box === selectedBoxNum + 4 || box === selectedBoxNum - 4) {
+        //         $(`.${box} .letter`).removeClass('unclickable')
+        //     } else if (box === selectedBoxNum + 5 || box === selectedBoxNum - 5) {
+        //         $(`.${box} .letter`).removeClass('unclickable')
+        //     }
+        // });
     }); // end of making the word
+
+    $('.box').on('click touchstart', '.unclickable', function(e) {
+        e.preventDefault();
+    })
 
     // keep the enter key from repeating the letter 
     $('.box').on('keydown', '.letter', function (e) {
         e.preventDefault(); // prevent default
     });
-
-
-    // stretch goal: upon first click, make everything 'unclickable'. then, make everything within 'selected' +- 1345+, clickable. 
 
 
     // CLEAR THE USER SELECTIONS
@@ -65,7 +88,6 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
     
     
     // COMPARING TO THE API
-
    
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -216,6 +238,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
                 app.displayAnswers();
                 app.changeScore();
+                // $('.letter').removeClass('unclickable');
                 
             }); // end of then
 
