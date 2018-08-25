@@ -6,3 +6,14 @@
     background-color: $pink;
     // add animation and make the pink turn off
 }
+
+button {
+    background-color: $lightblue;
+    color: $darkblue;
+    padding: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: $darkblue solid 3px;
+    border-radius: 50px;
+    max-width: 200px;
+}

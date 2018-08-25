@@ -8,71 +8,75 @@
     <title>Boggle</title>
 </head>
 <body>
-    <header>
-        <h1>Baby Boggle</h1>
-    </header>
+
+    <div class="wrapper secondPage">
+
+        <header>
+            <h1>Baby Boggle</h1>
+            <!-- <img src="assets/baby.svg" alt=""> -->
+        </header>
 
 
-    <main>
+        <main>
 
-    <div class="overlay">
+            <div class="overlay">
         
-            <div class="timer"> <!-- timer-->
-                <div class="display">
-                    <h1 class="timeLeft"></h1>
-                    <p class="endTime"></p>
-                </div>
-            </div> <!-- end of timer -->
+                <div class="timer"> <!-- timer-->
+                    <div class="display">
+                        <h1 class="timeLeft"></h1>
+                        <p class="endTime"></p>
+                    </div>
+                </div> <!-- end of timer -->
 
         
-            <div> <!--score board-->
-                <p>score: <span class="score">0</span></p>
-            </div> <!-- end of score board-->
+                <div> <!--score board-->
+                    <p>score: <span class="score">0</span></p>
+                </div> <!-- end of score board-->
+                
+
+                <div class="boggleBoard">  <!-- 4x4 board-->
+                    <div class="box 1"></div>
+                    <div class="box 2"></div>
+                    <div class="box 3"></div>
+                    <div class="box 4"></div>
+                    <div class="box 5"></div>
+                    <div class="box 6"></div>
+                    <div class="box 7"></div>
+                    <div class="box 8"></div>
+                    <div class="box 9"></div>
+                    <div class="box 10"></div>
+                    <div class="box 11"></div>
+                    <div class="box 12"></div>
+                    <div class="box 13"></div>
+                    <div class="box 14"></div>
+                    <div class="box 15"></div>
+                    <div class="box 16"></div>
+                </div> <!-- end of board-->
+
             
+                <form action="#"> <!--submit and clear buttons-->
+                    <div class="answer"></div>
+                    <button class="clear">Clear Selections</button>
+                    <button class="submitButton" type="submit">Submit Word</button>
+                </form> <!-- end of form-->
 
-            <div class="boggleBoard">  <!-- 4x4 board-->
-                <div class="box 1"></div>
-                <div class="box 2"></div>
-                <div class="box 3"></div>
-                <div class="box 4"></div>
-                <div class="box 5"></div>
-                <div class="box 6"></div>
-                <div class="box 7"></div>
-                <div class="box 8"></div>
-                <div class="box 9"></div>
-                <div class="box 10"></div>
-                <div class="box 11"></div>
-                <div class="box 12"></div>
-                <div class="box 13"></div>
-                <div class="box 14"></div>
-                <div class="box 15"></div>
-                <div class="box 16"></div>
-            </div> <!-- end of board-->
-
+                <div> <!-- listing ansers on the page only on desktop-->
+                    <ul class="displayedAnswers">
             
-            <form action="#"> <!--submit and clear buttons-->
-                <div class="answer"></div>
-                <button class="clear">Clear Selections</button>
-                <button class="submitButton" type="submit">Submit Word</button>
-            </form> <!-- end of form-->
+                    </ul>
+                </div> <!-- end of displaydAnswers-->
 
-            <div> <!-- listing ansers on the page only on desktop-->
-                <ul class="displayedAnswers">
-            
-                </ul>
-            </div> <!-- end of displaydAnswers-->
-
-        </div> <!--end of overlay-->
-
-    </main>
+            </div> <!--end of overlay-->
+          
+        </main>
 
 
+        <footer>
+            <p>&copy; Bahareh & Claire</p>
+        </footer>
 
- 
+    </div> <!-- end of secondPage and wrapper -->
 
-    <footer>
-        <p>&copy; Bahareh & Claire</p>
-    </footer>
  
     <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
     
