@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="public/styles/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+    <!-- pulse animations-->
     <title>Boggle</title>
 </head>
 <body>
@@ -14,21 +16,28 @@
         <header>
             <h1>Baby Boggle</h1>
             <!-- <img src="assets/baby.svg" alt=""> -->
-        </header>
 
+            <div>
+                <!--score board-->
+                <p>score:
+                    <span class="score">0</span>
+                </p>
+            </div> <!-- end of score board-->
+            
 
-        <main>        
-            <div class="timer"> <!-- timer-->
+            <div class="timer">
+                <!-- timer-->
                 <div class="display">
                     <p class="timeLeft"></p>
                     <p class="endTime"></p>
                 </div>
-            </div> <!-- end of timer -->
+            </div>
+            <!-- end of timer -->
 
-    
-            <div> <!--score board-->
-                <p>score: <span class="score">0</span></p>
-            </div> <!-- end of score board-->
+        </header>
+
+
+        <main>        
             
 
             <div class="boggleBoard">  <!-- 4x4 board-->
@@ -50,18 +59,22 @@
                 <div class="box 16"></div>
             </div> <!-- end of board-->
 
-        
-            <form action="#"> <!--submit and clear buttons-->
-                <div class="answer"></div>
-                <button class="clear">Clear Selections</button>
-                <button class="submitButton" type="submit">Submit Word</button>
-            </form> <!-- end of form-->
-
-            <div class="answerContainer"> <!-- listing ansers on the page only on desktop-->
-                <ul class="displayedAnswers">
-        
-                </ul>
-            </div> <!-- end of displaydAnswers-->
+            <div class="answerBlock">
+                
+                <form action="#"> <!--submit and clear buttons-->
+                    <div class="userAnswer"></div>
+                    <div class="answerButtons">
+                        <button class="clear animated">Clear </button>
+                        <button class="submitButton animated" type="submit">Submit</button>
+                    </div> <!-- end of answerButtons-->
+                </form> <!-- end of form-->
+                
+                <div class="answerContainer"> <!-- listing ansers on the page only on desktop-->
+                    <ul class="displayedAnswers">
+            
+                    </ul>
+                </div> <!-- end of displaydAnswers-->
+            </div> <!-- end of answerBlock-->
 
             
         </main>

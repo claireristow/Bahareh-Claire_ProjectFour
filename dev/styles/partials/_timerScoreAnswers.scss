@@ -1,0 +1,61 @@
+// ****** MAIN PAGE HEADER AND SCORE*****
+
+.secondPage {
+    height: 100vh;
+    header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px;
+        h1 {
+            margin-top: 31px;
+        }
+        p {
+            font-size: 2rem;
+            color: $darkblue;
+        }
+    }
+}
+
+// ******** ANSWER SPACE AND BUTTONS *******
+
+.secondPage main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.answerBlock {
+    width: 50%;
+}
+
+
+.userAnswer {
+    height: 63px;
+    text-align: left;
+    display: flex;
+    p {
+        font-size: 1.3rem;
+        margin: 0;
+        align-self: baseline;
+    }
+    
+}
+
+// *********** CORRECT ANSWERS DISPLAYED ON PAGE***********
+
+.displayedAnswers {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0;
+    max-height: 200px;
+    li {
+        margin: 10px;
+        width: calc(33% - 20px);
+        list-style: none;
+
+    }
+}
+
+
+
+

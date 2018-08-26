@@ -9,11 +9,15 @@
 
 button {
     background-color: $lightblue;
-    color: $darkblue;
+    color: $black;
+    font-weight: 700;
     padding: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
     border: $darkblue solid 3px;
     border-radius: 50px;
     max-width: 200px;
+    &:active {
+        transform: scale(0.9);
+    }
 }
