@@ -1,4 +1,3 @@
-
 // list of constants
 const app = {};
 const chars = 'aaaaabbccdddeeeeeeefgghhiiiiiijklllmmnnoooooprrrrsssttttuuuvwxyz';
@@ -13,7 +12,6 @@ app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
 // RANDOMLY GENERATE LETTERS ON A 4X4 GRID WHEN PRESSING 'START GAME'
 
-
 app.switchScreens = function (){
     $('.start').on('click touchstart', function(e) {
         e.preventDefault();
@@ -27,7 +25,7 @@ app.getBoard = function(){
             // generate random letters
             const ranLet = chars[Math.floor(Math.random() * 63)];       
             // append them to the board
-            $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)
+            $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)            
         };
         app.timer(90); // 90 seconds on the timer
 }; //end of getBoard
@@ -35,7 +33,7 @@ app.getBoard = function(){
 app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
 
-    // DISPLAYING THE ANSWER
+    // DISPLAY THE ANSWER
     
     $('.box').on('click touchstart', '.letter' ,function(e) {
         e.preventDefault(); // prevent default
@@ -44,28 +42,51 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         answer += activeLetter;
         $('.userAnswer').html(`<p>${answer}</p>`);
         
-        // // STRETCH GOAL 
+        // STRETCH GOAL 
 
         // upon first click, make everything 'unclickable'
         $('.letter').addClass('unclickable');
         
         // selectedBoxNum is equal to the *number* class of the box div
-        let selectedBoxNum = parseInt(($(this).parent()).attr('class').slice(-1));
-        const boxClass = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+        let selectedBoxNum = parseInt(($(this).parent()).attr('class').slice(-2));
 
-        // make everything within 'selected' +- 1345+, clickable
-        boxClass.forEach(function(box) {
-            if (box === selectedBoxNum + 1 || box === selectedBoxNum - 1) {
-                $(`.${box} .letter`).removeClass('unclickable');
-            } else if (box === selectedBoxNum + 3 || box === selectedBoxNum - 3) {
-                $(`.${box} .letter`).removeClass('unclickable')
-            } else if (box === selectedBoxNum + 4 || box === selectedBoxNum - 4) {
-                $(`.${box} .letter`).removeClass('unclickable')
-            } else if (box === selectedBoxNum + 5 || box === selectedBoxNum - 5) {
-                $(`.${box} .letter`).removeClass('unclickable')
-            }
-        });
-    }); // end of making the word
+        // if statements for removing 'unclickable' class from boxes in first column, middle columns and last column
+        for(let i = 1; i <= 16; i++) {
+            if ($(`.${selectedBoxNum}`).hasClass('firstColumn')) { //firstColumn
+                if (i === selectedBoxNum + 1) {
+                    $(`.${i} .letter`).removeClass('unclickable');
+                } else if (i === selectedBoxNum - 3) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum + 4 || i === selectedBoxNum - 4) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum + 5) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                }
+            } //end of firstColumn
+            else if ($(`.${selectedBoxNum}`).hasClass('lastColumn')){ //lastColumn
+                if (i === selectedBoxNum - 1) {
+                    $(`.${i} .letter`).removeClass('unclickable');
+                } else if (i === selectedBoxNum + 3) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum + 4 || i === selectedBoxNum - 4) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum - 5) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                }
+            } //end of lastColumn
+            else { //middleColumn
+                if (i === selectedBoxNum + 1 || i === selectedBoxNum - 1) {
+                    $(`.${i} .letter`).removeClass('unclickable');
+                } else if (i === selectedBoxNum + 3 || i === selectedBoxNum - 3) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum + 4 || i === selectedBoxNum - 4) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                } else if (i === selectedBoxNum + 5 || i === selectedBoxNum - 5) {
+                    $(`.${i} .letter`).removeClass('unclickable')
+                }             
+            } //end of middleColumn
+        } //end of for loop
+    }); //end of making the word
 
     $('.box').on('click touchstart', '.unclickable', function(e) {
         e.preventDefault();
@@ -83,7 +104,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         e.preventDefault(); //prevent default
         $('.userAnswer').empty();
         answer = '';
-        $('.letter').removeClass('selected');
+        $('.letter').removeClass('selected unclickable');
         $('.clear').addClass('');
         setTimeout(() => {
             $('.submitButton').removeClass('');
@@ -297,7 +318,6 @@ app.gameOver = function() {
     }); // end of start event function
 
 }
-
 
 // initialize function
 app.init = function () {
