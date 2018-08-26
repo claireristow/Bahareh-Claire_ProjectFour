@@ -34,6 +34,7 @@
     pointer-events: none;
     cursor: default;
     background: $lightblue;
+
 }
 
 .unclickable {
@@ -41,9 +42,6 @@
     cursor: default;
 }
 
-.answerContainer {
-    height: 3rem;
-}
 
 .display {
     color: $darkblue;

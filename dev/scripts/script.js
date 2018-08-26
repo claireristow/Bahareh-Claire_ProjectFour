@@ -42,7 +42,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         $(this).addClass('selected');
         let activeLetter = $(this).find('p').text();
         answer += activeLetter;
-        $('.answer').html(`<p>${answer}</p>`);
+        $('.userAnswer').html(`<p>${answer}</p>`);
         
         // // STRETCH GOAL 
 
@@ -81,9 +81,13 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
     
     $('.clear').on('click touchstart', function(e) {
         e.preventDefault(); //prevent default
-        $('.answer').empty();
+        $('.userAnswer').empty();
         answer = '';
         $('.letter').removeClass('selected');
+        $('.clear').addClass('');
+        setTimeout(() => {
+            $('.submitButton').removeClass('');
+        }, 1000);
     }); // end of clear
     
     
@@ -93,7 +97,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         e.preventDefault();
         $('.displayedAnswers').empty();
         
-        const submitAnswer = $('.answer').text();
+        const submitAnswer = $('.userAnswer').text();
 
         const getAPI = function(query) {
             $.ajax({
@@ -231,7 +235,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                     
                 // }; // end of 'not a word'
                     
-                $('.answer').empty();
+                $('.userAnswer').empty();
                 answer = "";
                 $('.letter').removeClass('selected');
                 console.log(answerList);
@@ -269,9 +273,9 @@ app.duplicateAnswer = function(word) {
 }; // end of duplicateAnswer function
 
 app.wrongAlert = function() {
-    $('.submitButton').addClass('wrong');
+    $('.submitButton').addClass('wrong wobble');
     setTimeout(() => {
-        $('.submitButton').removeClass('wrong');
+        $('.submitButton').removeClass('wrong wobble');
     }, 1000);
     $('.letter.selected').addClass('wrong');
     setTimeout(() => {
@@ -315,7 +319,7 @@ app.timer = function(seconds) {
         // }
         if(secondsLeft <= 0) {
             clearInterval(countdown);
-            app.gameOver()
+            // app.gameOver()
             return;
         }
         displayTimeLeft(secondsLeft);

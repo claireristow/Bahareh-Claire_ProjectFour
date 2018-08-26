@@ -1,10 +1,13 @@
 .firstPage {
-    height: 100vh;
+    // height: 100vh;
     header {
         display: flex;
         justify-content: center;
-        height: 20vh;
+        height: 10vh;
         text-align: center;
+        border-left: 0.5px grey solid;
+        border-right: 0.5px grey solid;
+        margin-top: 100px;
     }
     main {
         display: flex;
@@ -12,7 +15,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 70vh;
+        height: 60vh;
+        border-left: 0.5px grey solid;
+        border-right: 0.5px grey solid;
 
     }
     footer {
