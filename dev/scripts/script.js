@@ -46,25 +46,25 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         
         // // STRETCH GOAL 
 
-        // // upon first click, make everything 'unclickable'
-        // $('.letter').addClass('unclickable');
+        // upon first click, make everything 'unclickable'
+        $('.letter').addClass('unclickable');
         
-        // // selectedBoxNum is equal to the *number* class of the box div
-        // let selectedBoxNum = parseInt(($(this).parent()).attr('class').slice(-1));
-        // const boxClass = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+        // selectedBoxNum is equal to the *number* class of the box div
+        let selectedBoxNum = parseInt(($(this).parent()).attr('class').slice(-1));
+        const boxClass = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
 
-        // // make everything within 'selected' +- 1345+, clickable
-        // boxClass.forEach(function(box) {
-        //     if (box === selectedBoxNum + 1 || box === selectedBoxNum - 1) {
-        //         $(`.${box} .letter`).removeClass('unclickable');
-        //     } else if (box === selectedBoxNum + 3 || box === selectedBoxNum - 3) {
-        //         $(`.${box} .letter`).removeClass('unclickable')
-        //     } else if (box === selectedBoxNum + 4 || box === selectedBoxNum - 4) {
-        //         $(`.${box} .letter`).removeClass('unclickable')
-        //     } else if (box === selectedBoxNum + 5 || box === selectedBoxNum - 5) {
-        //         $(`.${box} .letter`).removeClass('unclickable')
-        //     }
-        // });
+        // make everything within 'selected' +- 1345+, clickable
+        boxClass.forEach(function(box) {
+            if (box === selectedBoxNum + 1 || box === selectedBoxNum - 1) {
+                $(`.${box} .letter`).removeClass('unclickable');
+            } else if (box === selectedBoxNum + 3 || box === selectedBoxNum - 3) {
+                $(`.${box} .letter`).removeClass('unclickable')
+            } else if (box === selectedBoxNum + 4 || box === selectedBoxNum - 4) {
+                $(`.${box} .letter`).removeClass('unclickable')
+            } else if (box === selectedBoxNum + 5 || box === selectedBoxNum - 5) {
+                $(`.${box} .letter`).removeClass('unclickable')
+            }
+        });
     }); // end of making the word
 
     $('.box').on('click touchstart', '.unclickable', function(e) {
@@ -190,7 +190,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
                 app.displayAnswers();
                 app.changeScore();
-                // $('.letter').removeClass('unclickable');
+                $('.letter').removeClass('unclickable');
                 
             }); // end of then
 
