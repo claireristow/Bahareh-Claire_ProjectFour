@@ -33,4 +33,18 @@
     font-weight: 900;
     pointer-events: none;
     cursor: default;
+    background: $lightblue;
+}
+
+.unclickable {
+    pointer-events: none;
+    cursor: default;
+}
+
+.answerContainer {
+    height: 3rem;
+}
+
+.display {
+    color: $darkblue;
 }

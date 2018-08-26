@@ -9,18 +9,30 @@ html {
     margin: 0 auto;
 }
 
+h1 {
+    text-transform: uppercase;
+    font-size: 3rem;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
 header .wrapper {
     display: flex;
     flex-direction: row;
-    h1 {
-        text-transform: uppercase;
-        font-size: 3rem;
-    }
     img {
         width: 50%;
     }
-    
-
 }
 
 
