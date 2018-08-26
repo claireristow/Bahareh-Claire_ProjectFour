@@ -137,8 +137,15 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                                 answerList.delete(word[0].ew);
                                 app.wrongAlert();
                             } //end of word is uppercase abbrev OR capitalized
-
+                            
                         } //end of array word types
+                        else if (word[0].cx) { //targeting past tense words for arrays 
+                            if (word[0].cx.cl === "past of" || word[0].cx.cl === "past and past participle of") {
+                                app.duplicateAnswer(word[0].ew);
+                                answerList.add(word[0].ew);
+                                app.findWhiteSpace(word[0].ew);
+                            } 
+                        } //end of past tense words for arrays
                         else { // unaccepted word type for arrays
                             app.wrongAlert();
                         } //end of unaccepted word type for arrays
@@ -152,7 +159,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
                             if (word.ew === word.ew.toUpperCase() || word.ew === (word.ew).charAt(0).toUpperCase() + (word.ew).slice(1)) { // word is uppercase abbrev OR capitalized
                                 answerList.delete(word.ew);
-                                app.WrongAlert();
+                                app.wrongAlert();
                             } //end of word is uppercase abbrev OR capitalized
                             else if (word.et === "by shortening & alteration") { //shortform word
                                 answerList.delete(word.ew);
@@ -160,6 +167,13 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                             } // end of shortform word like "helo"
 
                         } //end of object word types
+                        else if (word.cx) { //targeting past tense words for objects 
+                            if (word.cx.cl === "past of" || word.cx.cl === "past and past participle of") {
+                                app.duplicateAnswer(word.ew);
+                                answerList.add(word.ew);
+                                app.findWhiteSpace(word.ew);
+                            }
+                        } //end of past tense words for objects
                         else { // unaccepted word type for objects
                             app.wrongAlert();
                         } //end of unaccepted word type for objects
@@ -170,70 +184,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 else { //not a word
                     app.wrongAlert();
 
-                }; // end of 'not a word'
-                
-                // if (resp.entry_list.suggestion) { // if suggestion
-                //     $('.submitButton').addClass('wrong');
-                //     setTimeout(() => {
-                //         $('.submitButton').removeClass('wrong');
-                //     }, 1000);
-                //     // console.log('suggestion');
-                    
-                // } // end of suggestion
-
-                // else if (word) {   
-                //     if (word[0]) { //array
-                //         app.duplicateAnswer(word[0].ew);
-                //         answerList.add(word[0].ew);
-                //         app.findWhiteSpace(word[0].ew);
-                    
-                //         if (word[0].fl === 'abbreviation') { // abbreviation array
-                //             answerList.delete(word[0].ew);
-                //             $('.submitButton').addClass('wrong');
-                //             setTimeout(() => {
-                //                 $('.submitButton').removeClass('wrong');
-                //             }, 1000);
-                        
-                //         } // end of array abbreviation
-                //         else if (word[0].ew === word[0].ew.toUpperCase()){
-                //             answerList.delete(word[0].ew);
-                //             $('.submitButton').addClass('wrong');
-                //             setTimeout(() => {
-                //                 $('.submitButton').removeClass('wrong');
-                //             }, 1000);
-                //         }
-                        
-                //     }  // end of array
-                //     else { // aka if it's an object
-                //         if (word.fl === 'abbreviation'){ //object abbreviation
-                //             $('.submitButton').addClass('wrong');
-                //             setTimeout(() => {
-                //                 $('.submitButton').removeClass('wrong');
-                //             }, 1000);
-  
-                //         }  // end of object abbreviation
-                //         else if (word.ew === word.ew.toUpperCase()) { //object uppercase noun
-                //             $('.submitButton').addClass('wrong');
-                //             setTimeout(() => {
-                //                 $('.submitButton').removeClass('wrong');
-                //             }, 1000);
-                //         } //end of object uppercase noun
-                //         else { //object no array
-                //             app.duplicateAnswer(word.ew);
-                //             answerList.add(word.ew);
-                //             app.findWhiteSpace(word.ew);
-                //             console.log(word.ew);
-
-                //         }// end of object no array
-
-                //     } // end of object
-                // } else {
-                //     $('.submitButton').addClass('wrong');
-                //     setTimeout(() => {
-                //         $('.submitButton').removeClass('wrong');
-                //     }, 1000);
-                    
-                // }; // end of 'not a word'
+                }; //end of if statements!!
                     
                 $('.userAnswer').empty();
                 answer = "";
@@ -314,12 +265,12 @@ app.timer = function(seconds) {
 
     countdown = setInterval(() => {
         let secondsLeft = (then - Date.now()) / 1000;
-        // if ( secondsLeft < 10) {
-        //     secondsLeft = "0" + secondsLeft;
-        // }
+        if ( seconds < 10) {
+            seconds = "0" + secondsLeft;
+        }
         if(secondsLeft <= 0) {
             clearInterval(countdown);
-            // app.gameOver()
+            app.gameOver()
             return;
         }
         displayTimeLeft(secondsLeft);
@@ -345,7 +296,6 @@ app.gameOver = function() {
     }); // end of start event function
 
 }
-
 
 
 // initialize function
