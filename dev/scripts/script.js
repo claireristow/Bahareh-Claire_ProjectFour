@@ -139,16 +139,15 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                             } //end of word is uppercase abbrev OR capitalized
                             
                         } //end of array word types
-                        else if (word[0].cx) { //targeting past tense words for arrays 
-                            if (word[0].cx.cl === "past of" || word[0].cx.cl === "past and past participle of") {
-                                app.duplicateAnswer(word[0].ew);
-                                answerList.add(word[0].ew);
-                                app.findWhiteSpace(word[0].ew);
-                            } 
+                        else if (word[0].cx.ct || word[0].cx[0].ct) { //targeting past tense words for arrays
+                            app.duplicateAnswer(word[0].ew);
+                            answerList.add(word[0].ew);
+                            app.findWhiteSpace(word[0].ew);
                         } //end of past tense words for arrays
                         else { // unaccepted word type for arrays
                             app.wrongAlert();
                         } //end of unaccepted word type for arrays
+
 
                     } // end of is array
                     else { //is object
@@ -167,12 +166,10 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                             } // end of shortform word like "helo"
 
                         } //end of object word types
-                        else if (word.cx) { //targeting past tense words for objects 
-                            if (word.cx.cl === "past of" || word.cx.cl === "past and past participle of") {
-                                app.duplicateAnswer(word.ew);
-                                answerList.add(word.ew);
-                                app.findWhiteSpace(word.ew);
-                            }
+                        else if (word.cx.ct || word.cx[0].ct) { //targeting past tense words for objects 
+                            app.duplicateAnswer(word.ew);
+                            answerList.add(word.ew);
+                            app.findWhiteSpace(word.ew);
                         } //end of past tense words for objects
                         else { // unaccepted word type for objects
                             app.wrongAlert();
@@ -262,12 +259,8 @@ app.timer = function(seconds) {
     const now = Date.now();
     const then = now + seconds * 1000;
     displayTimeLeft(seconds);
-
     countdown = setInterval(() => {
         let secondsLeft = (then - Date.now()) / 1000;
-        if ( seconds < 10) {
-            seconds = "0" + secondsLeft;
-        }
         if(secondsLeft <= 0) {
             clearInterval(countdown);
             app.gameOver()
@@ -281,8 +274,12 @@ app.timer = function(seconds) {
 
 function displayTimeLeft(seconds) {
     const minutes = Math.floor(seconds / 60);
-    const remainderSeconds = Math.floor(seconds % 60);
-    const display = `${minutes}:${remainderSeconds}`;
+    let remainderSeconds = Math.floor(seconds % 60);
+    let display = `${minutes}:${remainderSeconds}`;
+    if (remainderSeconds < 10) {
+        remainderSeconds = "0" + remainderSeconds;
+        display = `${minutes}:${remainderSeconds}`;
+    }
     timerDisplay.textContent = display;
 } // end of displaying the time
 
