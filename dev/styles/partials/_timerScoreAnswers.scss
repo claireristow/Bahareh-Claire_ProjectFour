@@ -16,21 +16,87 @@
     }
 }
 
+@media (max-width: 780px) {
+    .secondPage header {
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-bottom: 0;
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 0;
+        }
+    }
+}
+
+@media (max-width: 680px) {
+    .secondPage header {
+        p {
+            margin: 10px;
+            font-size: 1.5rem;
+        }
+        h1 {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+    }
+}
+
+.grow p {
+    transform: scale(1.3);
+    font-weight: 700;
+}
+
 // ******** ANSWER SPACE AND BUTTONS *******
 
 .secondPage main {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .answerBlock {
     width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (max-width: 780px) {
+    .answerBlock {
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .answerButtons button {
+        margin: 10px;
+    }
+}
+
+.answerButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 30px;
+}
+
+@media (max-width: 960px) {
+    .answerButtons {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 680px) {
+    .answerButtons {
+        flex-direction: row;
+    }
 }
 
 
 .userAnswer {
     height: 63px;
-    text-align: left;
+    justify-self: center;
     display: flex;
     p {
         font-size: 1.3rem;
@@ -40,14 +106,31 @@
     
 }
 
+.dynamicContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 // *********** CORRECT ANSWERS DISPLAYED ON PAGE***********
+
+.answerContainer {
+    width: 100%;
+}
+
+@media (max-width: 780px) {
+    .answerContainer  {
+        display: none;
+    }
+}
 
 .displayedAnswers {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     margin: 0;
-    max-height: 200px;
+    max-height: 300px;
     li {
         margin: 10px;
         width: calc(33% - 20px);

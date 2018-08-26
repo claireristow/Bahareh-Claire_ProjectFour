@@ -128,7 +128,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 } // end of suggestion
                 else if (word) { // start of if (word)
                     if (word[0]) { //is array
-                        if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner") { // array word types
+                        if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner" || word[0].fl === "pronoun, plural in construction") { // array word types
                         app.duplicateAnswer(word[0].ew);
                         answerList.add(word[0].ew);
                         app.findWhiteSpace(word[0].ew);
@@ -151,7 +151,7 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
                     } // end of is array
                     else { //is object
-                        if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner") { // object word types 
+                        if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner" || word.fl === "pronoun, plural in construction") { // object word types 
                         app.duplicateAnswer(word.ew);
                         answerList.add(word.ew);
                         app.findWhiteSpace(word.ew);
@@ -221,9 +221,9 @@ app.duplicateAnswer = function(word) {
 }; // end of duplicateAnswer function
 
 app.wrongAlert = function() {
-    $('.submitButton').addClass('wrong wobble');
+    $('.submitButton').removeClass('pulse infinite').addClass('wrong wobble');
     setTimeout(() => {
-        $('.submitButton').removeClass('wrong wobble');
+        $('.submitButton').removeClass('wrong wobble').addClass('infinite pulse');
     }, 1000);
     $('.letter.selected').addClass('wrong');
     setTimeout(() => {
@@ -237,6 +237,10 @@ app.wrongAlert = function() {
 app.changeScore = function() {
     let score = answerList.size;
     $('.score').html(`${score}`);
+    $('.scoreBoard').addClass('grow');
+    setTimeout(() => {
+        $('.scoreBoard').removeClass('grow');
+    }, 500);
 };
 
 

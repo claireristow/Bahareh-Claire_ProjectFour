@@ -46,3 +46,13 @@
 .display {
     color: $darkblue;
 }
+
+@media (max-width: 680px) {
+    .secondPage main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+
+}
