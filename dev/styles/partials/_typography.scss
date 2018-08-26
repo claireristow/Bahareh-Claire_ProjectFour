@@ -10,13 +10,17 @@ html {
     margin: 0 auto;
 }
 
+@media (max-width: 1200px) {
+    .wrapper {
+        width: 85%;
+    }
+}
+
 h1 {
     text-transform: uppercase;
-    font-size: 3rem;
     padding: 0;
     margin: 0;
     color: $darkblue;
-
 }
 
 h2 {
@@ -25,14 +29,7 @@ h2 {
     padding: 0;
 }
 
-.frontHead {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    p {
-        font-size: 1.2rem;
-    }
-}
+
 
 header .wrapper {
     display: flex;

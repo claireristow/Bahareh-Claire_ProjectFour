@@ -17,7 +17,7 @@
             <h1>Baby Boggle</h1>
             <!-- <img src="assets/baby.svg" alt=""> -->
 
-            <div>
+            <div class="scoreBoard">
                 <!--score board-->
                 <p>score:
                     <span class="score">0</span>
@@ -61,19 +61,23 @@
 
             <div class="answerBlock">
                 
-                <form action="#"> <!--submit and clear buttons-->
-                    <div class="userAnswer"></div>
-                    <div class="answerButtons">
-                        <button class="clear animated">Clear </button>
-                        <button class="submitButton animated" type="submit">Submit</button>
-                    </div> <!-- end of answerButtons-->
+                <form action="#" class="answerButtons"> <!--submit and clear buttons-->
+
+                    <button class="submitButton animated pulse infinite" type="submit">Submit</button>
+                    <button class="clear animated">Clear </button>
+                    
                 </form> <!-- end of form-->
+
+                <div class="dynamicContent">
+
+                    <div class="userAnswer"></div> <!--where the users type their answer-->
+                    
+                    <div class="answerContainer"> <!-- listing ansers on the page only on desktop-->
+                        <ul class="displayedAnswers">
                 
-                <div class="answerContainer"> <!-- listing ansers on the page only on desktop-->
-                    <ul class="displayedAnswers">
-            
-                    </ul>
-                </div> <!-- end of displaydAnswers-->
+                        </ul>
+                    </div> <!-- end of displaydAnswers-->
+                </div><!-- end of dynamicContent-->
             </div> <!-- end of answerBlock-->
 
             
