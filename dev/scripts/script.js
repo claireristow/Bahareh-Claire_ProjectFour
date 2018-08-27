@@ -88,6 +88,8 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
         } //end of for loop
     }); //end of making the word
 
+
+    //preventing default action on unclickable
     $('.box').on('click touchstart', '.unclickable', function(e) {
         e.preventDefault();
     })
