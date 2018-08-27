@@ -15,7 +15,7 @@ app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 app.switchScreens = function (){
     $('.start').on('click touchstart', function(e) {
         e.preventDefault();
-        window.location.replace("/board.html");
+        window.location.replace("WordScramble/board.html");
     }); // end of start event function
 }; // end of switchScreens function
 
@@ -27,7 +27,7 @@ app.getBoard = function(){
             // append them to the board
             $(`.${i}`).append(`<a href="#" class="letter"><p>${ranLet}</p></a>`)            
         };
-        app.timer(90); // 90 seconds on the timer
+        app.timer(10); // 90 seconds on the timer
 }; //end of getBoard
 
 app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
@@ -315,7 +315,7 @@ app.gameOver = function() {
     $('.overlay').removeClass('hide');
     $('.playAgain').on('click touchstart', function(e) {
         e.preventDefault();
-        window.location.replace("/board.html");
+        location.reload();
         $('.overlay').addClass('hide');
     }); // end of start event function
 
