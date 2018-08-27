@@ -1,5 +1,6 @@
 html {
     font-size: 20px;
+    font-family: 'Cutive', serif;
     background-image: url(../../../assets/dust_scratches.png);
 
 }
@@ -17,7 +18,6 @@ html {
 }
 
 h1 {
-    text-transform: uppercase;
     padding: 0;
     margin: 0;
     color: $darkblue;
@@ -36,6 +36,17 @@ header .wrapper {
     flex-direction: row;
     img {
         width: 50%;
+    }
+}
+
+footer {
+    font-size: 12px;
+    text-align: center; 
+    margin-top: 10px;
+    color: $darkblue;
+    p {
+        margin: 0;
+        padding: 0;
     }
 }
 
