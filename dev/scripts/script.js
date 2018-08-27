@@ -15,7 +15,7 @@ app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 app.switchScreens = function (){
     $('.start').on('click touchstart', function(e) {
         e.preventDefault();
-        window.location.replace("/board.html");
+        window.location.replace("WordScramble/board.html");
     }); // end of start event function
 }; // end of switchScreens function
 
