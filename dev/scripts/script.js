@@ -6,7 +6,7 @@ const answerList = new Set();
 let countdown;
 const timerDisplay = document.querySelector('.timeLeft');
 
-app.url = 'https://www.dictionaryapi.com/api/v1/references/collegiate/xml/';
+app.url = 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/';
 app.key = '8c5c85a3-ffa3-4f09-b901-7db8209015dc';
 
 
@@ -124,87 +124,94 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
 
         const getAPI = function(query) {
             $.ajax({
-                url: 'https://proxy.hackeryou.com',
-                method: 'GET',
-                dataResponse: 'json',
-                paramsSerializer: function (params) {
-                    return Qs.stringify(params, { arrayFormat: 'brackets' })
-                },
+                url: `${app.url}${query}`,
+                method: "GET",
+                dataType: 'json',
                 data: {
-                    reqUrl: app.url,
-                    params: {
-                        'key': app.key,
-                        'word': query
-                    },
-                    xmlToJSON: true,
-                    useCache: false
-                } // end of ajax
+                    key: app.key
+                }
             }).then(resp => {
                 console.log(resp);
 
-                const word = resp.entry_list.entry;
+                // const word = resp.entry_list.entry;
+                const word = resp[0];
+                console.log(word);
+                
 
-                if (resp.entry_list.suggestion) {
+                if (!word.fl) {
                     app.wrongAlert();
                     // console.log('suggestion');
 
                 } // end of suggestion
-                else if (word) { // start of if (word)
-                    if (word[0]) { //is array
-                        if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner" || word[0].fl === "pronoun, plural in construction") { // array word types
-                        app.duplicateAnswer(word[0].ew);
-                        answerList.add(word[0].ew);
-                        app.findWhiteSpace(word[0].ew);
+                else if (word.fl) {
+                    if (word.fl === 'abbreviation' || word.fl === 'combining form') {
+                        answerList.delete(word.fl);
+                        app.wrongAlert();
+                    } else {
+                        app.duplicateAnswer(word.hwi.hw);
+                        answerList.add(word.hwi.hw);
+                        app.findWhiteSpace(word.hwi.hw);
+                    }
+                    
+                }
 
-                            if (word[0].ew === word[0].ew.toUpperCase() || word[0].ew === (word[0].ew).charAt(0).toUpperCase() + (word[0].ew).slice(1)) { // word is uppercase abbrev OR capitalized
-                                answerList.delete(word[0].ew);
-                                app.wrongAlert();
-                            } //end of word is uppercase abbrev OR capitalized
+                
+                // else if (word) { // start of if (word)
+                //     if (word[0]) { //is array
+                //         if (word[0].fl === "noun" || word[0].fl === "verb" || word[0].fl === "adjective" || word[0].fl === "adverb" || word[0].fl === "pronoun" || word[0].fl === "preposition" || word[0].fl === "conjunction" || word[0].fl === "determiner" || word[0].fl === "pronoun, plural in construction") { // array word types
+                //         app.duplicateAnswer(word[0].ew);
+                //         answerList.add(word[0].ew);
+                //         app.findWhiteSpace(word[0].ew);
+
+                //             if (word[0].ew === word[0].ew.toUpperCase() || word[0].ew === (word[0].ew).charAt(0).toUpperCase() + (word[0].ew).slice(1)) { // word is uppercase abbrev OR capitalized
+                //                 answerList.delete(word[0].ew);
+                //                 app.wrongAlert();
+                //             } //end of word is uppercase abbrev OR capitalized
                             
-                        } //end of array word types
-                        else if (word[0].cx.ct || word[0].cx[0].ct) { //targeting past tense words for arrays
-                            app.duplicateAnswer(word[0].ew);
-                            answerList.add(word[0].ew);
-                            app.findWhiteSpace(word[0].ew);
-                        } //end of past tense words for arrays
-                        else { // unaccepted word type for arrays
-                            app.wrongAlert();
-                        } //end of unaccepted word type for arrays
+                //         } //end of array word types
+                //         else if (word[0].cx.ct || word[0].cx[0].ct) { //targeting past tense words for arrays
+                //             app.duplicateAnswer(word[0].ew);
+                //             answerList.add(word[0].ew);
+                //             app.findWhiteSpace(word[0].ew);
+                //         } //end of past tense words for arrays
+                //         else { // unaccepted word type for arrays
+                //             app.wrongAlert();
+                //         } //end of unaccepted word type for arrays
 
 
-                    } // end of is array
-                    else { //is object
-                        if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner" || word.fl === "pronoun, plural in construction") { // object word types 
-                        app.duplicateAnswer(word.ew);
-                        answerList.add(word.ew);
-                        app.findWhiteSpace(word.ew);
+                //     } // end of is array
+                //     else { //is object
+                //         if (word.fl === "noun" || word.fl === "verb" || word.fl === "adjective" || word.fl === "adverb" || word.fl === "pronoun" || word.fl === "preposition" || word.fl === "conjunction" || word.fl === "determiner" || word.fl === "pronoun, plural in construction") { // object word types 
+                //         app.duplicateAnswer(word.ew);
+                //         answerList.add(word.ew);
+                //         app.findWhiteSpace(word.ew);
 
-                            if (word.ew === word.ew.toUpperCase() || word.ew === (word.ew).charAt(0).toUpperCase() + (word.ew).slice(1)) { // word is uppercase abbrev OR capitalized
-                                answerList.delete(word.ew);
-                                app.wrongAlert();
-                            } //end of word is uppercase abbrev OR capitalized
-                            else if (word.et === "by shortening & alteration") { //shortform word
-                                answerList.delete(word.ew);
-                                app.wrongAlert();
-                            } // end of shortform word like "helo"
+                //             if (word.ew === word.ew.toUpperCase() || word.ew === (word.ew).charAt(0).toUpperCase() + (word.ew).slice(1)) { // word is uppercase abbrev OR capitalized
+                //                 answerList.delete(word.ew);
+                //                 app.wrongAlert();
+                //             } //end of word is uppercase abbrev OR capitalized
+                //             else if (word.et === "by shortening & alteration") { //shortform word
+                //                 answerList.delete(word.ew);
+                //                 app.wrongAlert();
+                //             } // end of shortform word like "helo"
 
-                        } //end of object word types
-                        else if (word.cx.ct || word.cx[0].ct) { //targeting past tense words for objects 
-                            app.duplicateAnswer(word.ew);
-                            answerList.add(word.ew);
-                            app.findWhiteSpace(word.ew);
-                        } //end of past tense words for objects
-                        else { // unaccepted word type for objects
-                            app.wrongAlert();
-                        } //end of unaccepted word type for objects
+                //         } //end of object word types
+                //         else if (word.cx.ct || word.cx[0].ct) { //targeting past tense words for objects 
+                //             app.duplicateAnswer(word.ew);
+                //             answerList.add(word.ew);
+                //             app.findWhiteSpace(word.ew);
+                //         } //end of past tense words for objects
+                //         else { // unaccepted word type for objects
+                //             app.wrongAlert();
+                //         } //end of unaccepted word type for objects
 
-                    } //end of is object
+                //     } //end of is object
 
-                } // end of if (word)
-                else { //not a word
-                    app.wrongAlert();
+                // } // end of if (word)
+                // else { //not a word
+                //     app.wrongAlert();
 
-                }; //end of if statements!!
+                // }; //end of if statements!!
                     
                 $('.userAnswer').empty();
                 answer = "";
@@ -215,10 +222,13 @@ app.events = function() { //EVENTS FUNCTION ONCE THE BOARD IS MADE
                 app.changeScore();
                 $('.letter').removeClass('unclickable');
                 
+                
             }); // end of then
 
         }; // end of getAPI function
-        console.log(getAPI(submitAnswer));
+        // console.log(getAPI(submitAnswer));
+        getAPI(submitAnswer);
+        
         
     });  // end of form submit
     
